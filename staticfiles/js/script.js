@@ -1,1 +1,0 @@
-console.log("Guitars, Life, The Universe and Everything!");

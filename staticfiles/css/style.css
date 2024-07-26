@@ -46,6 +46,10 @@ body {
     background-color: #188181;
 }
 
+.about-image {
+    width: 75vh;
+    }
+
 .scale {
     width: 100%;
     height: auto;

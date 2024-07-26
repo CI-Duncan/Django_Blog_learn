@@ -16,7 +16,7 @@ class PostList(generic.ListView):
 
 def post_detail(request, slug):
     """
-    Display an individual :model:`blog.Post`.
+    Display an individual blog :model:`blog.Post`.
 
     **Context**
 
@@ -29,7 +29,7 @@ def post_detail(request, slug):
     """
 
     queryset = Post.objects.filter(status=1)
-    post = get_object_or_404(queryset, slug=slug) 
+    post = get_object_or_404(queryset, slug=slug)
     comments = post.comments.all().order_by("-created_on")
     comment_count = post.comments.filter(approved=True).count()
     if request.method == "POST":
@@ -46,20 +46,28 @@ def post_detail(request, slug):
 
     comment_form = CommentForm()
 
-    
+
     return render(
         request,
         "blog/post_detail.html",
         {"post": post,
-        "comments": comments,
-        "comment_count": comment_count,
-        "comment_form": comment_form,
+            "comments": comments,
+            "comment_count": comment_count,
+            "comment_form": comment_form,
         },
     )
 
+
 def comment_edit(request, slug, comment_id):
     """
-    view to edit comments
+    Edit an individual :model:`blog.Post` if authenticated author
+    **Context**
+    ``post``
+        An instance of :model:`blog.Post`.
+    ``comment``
+        A single comment related to the post
+    ``comment_form``
+        An instance of :model:`blog.CommentForm`..
     """
     if request.method == "POST":
 
@@ -79,9 +87,15 @@ def comment_edit(request, slug, comment_id):
 
     return HttpResponseRedirect(reverse('post_detail', args=[slug]))
 
+
 def comment_delete(request, slug, comment_id):
     """
-    view to delete comment
+    Delete an individual comment
+    **Context**
+    ``post``
+        An instance of :model:`blog.Post`.
+    ``comment``
+        A single comment related to the post
     """
     queryset = Post.objects.filter(status=1)
     post = get_object_or_404(queryset, slug=slug)

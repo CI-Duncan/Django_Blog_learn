@@ -32,8 +32,7 @@ def about_me(request):
     return render(
         request,
         "about/about.html",
-        {
-            "about": about,
+        {   "about": About,
             "collaborate_form": collaborate_form
         },
     )
